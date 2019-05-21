@@ -1,46 +1,27 @@
-# paywallment-front-end-test
-Goal
-Build a JavaScript-based payment widget
-Stack
-You can use any of the following JavaScript frameworks: React, Angular (except AngularJS 1.x) or you
-can go with Vanilla JavaScript.
-You can use any front-end framework. For e.g. Bootstrap, Foundation, etc.
-You can use any suitable build tool for the framework of choice.
+# Paymenwall
 
-Requirements
-Widget should work in the latest versions of Chrome, Firefox and Safari and in IE10 and up.
-Widget should be mobile-first and support screen width from 320px and up.
-Widget should accept amount parameter. For e.g. "5 USD".
-Widget should contain following components:
-Country selector
-payment method selector
-payment method form
-success/error screen
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.4.
 
-Country selector
-By default geolocated country is used. If user changes the country, payment methods should be pulled from the
-API. (Instructions how to get an API key are in the next section)
-Payment method selector
-The following steps should be completed to get an API key:
-Sign up as a merchant at https://www.paymentwall.com (You can use any URL in the Merchant URL
-field);
-go to https://api.paymentwall.com/developers/applications;
-select your project;
-activate evaluation mode;
-get an API key.
-After previous steps are completed, payment methods can be pulled from the API.
-Payment methods in selector should have a logotype and a name.
+## Development server
 
-Payment method form
-Payment method form for any of the payment methods should be a card form (only for the test task).
-Card form should contain the following elements and fields that should pass the respective validation
-requirements:
-cardholder name (characters only);
-card number (numbers only, Luhn algorithm);
-exp. date (a valid date in future);
-cvv (numbers only);
-submit button `Pay ${amount} ${currency}`.
-Fields shoud be validated on input, focus change and submit. Proper error messages should be shown. If the
-form is valid success screen should be shown.
-The source code of the test task should be shared through GitHub or similar service and the test task itself
-should be hosted on the GitHub Pages or similar service.
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+
+## Code scaffolding
+
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+
+## Build
+
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+
+## Running unit tests
+
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+
+## Running end-to-end tests
+
+Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+
+## Further help
+
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
