@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PaymentServiceService {
 
+  apiUrl = environment.apiUrl
   constructor(
     private http: HttpClient
   ) { }
-  getPaymentMethod() {
-    return this.http.get("https://api.paymentwall.com/api/payment-systems/?key=f09ca3bf35e6900a672feadb12bc9aa7&country_code=VN&sign_version=2&sign=56358700c2a7940527056fd45d008fa9");
+  getPaymentMethod(projectKey, privateKey, country_code) {
+    return this.http.get(`${this.apiUrl}?key=${projectKey}&country_code=${country_code}&sign_version=2&sign=${privateKey}`);
   }
 
 }

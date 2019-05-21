@@ -7,11 +7,15 @@ import { PaymentComponent } from './payment/payment.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
+import { SuccessComponent } from './result-screen/success/success.component';
+import { ErrorComponent } from './result-screen/error/error.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PaymentComponent
+    PaymentComponent,
+    SuccessComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,
