@@ -6,8 +6,9 @@ export const environment = {
   production: false,
   projectKey: "f09ca3bf35e6900a672feadb12bc9aa7",
   privateKey: "56358700c2a7940527056fd45d008fa9",
-  apiUrl:"https://api.paymentwall.com/api/payment-systems/"
-
+  apiUrl:"https://api.paymentwall.com/api/payment-systems/",
+  countryUrl:"https://restcountries.eu/rest/v2/all",
+  currentCountry:"https://api.ipdata.co?api-key=test"
 };
 
 /*

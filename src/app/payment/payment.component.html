@@ -1,12 +1,112 @@
 <div class="col-md-12">
-  <div class="row">
+  <div class="row ">
     <div class="col-md-3"></div>
-    <div class="col-md-6 center-alignment">
-      <h1>Payment Wall</h1>
+    <div class="col-md-6" style="padding: 20px">
+      <div class="row center-alignment">
+        <img width="80px" height="80px" src="../../assets/logo.png" alt="logo">
+        <h1>Payment Wall</h1>
+      </div>
       <div class="row">
-        <button (click)="getData()">
-          get
-        </button>
+        <div class="voucher">
+          <br>
+          <div class="col-md-12">
+            Price: <b>{{price}}{{currencyUnit}}</b>
+          </div>
+          <div class="col-md-12 space">
+            <input style="width: 80%" type="text" class="form-control" placeholder="place your voucher code">
+            <button class="btn btn-warning" style="margin-left:20px">Redeem</button>
+          </div>
+          <br>
+        </div>
+      </div>
+      <div class="row">
+        <h3>Please select your payment method</h3>
+      </div>
+      <!-- <div class="row"> -->
+      <div class="row">
+        <label for="country"><i>Your country <span class="icon-red">*</span> </i></label>
+      </div>
+      <div class="row">
+        <ng-select style="width: 100%" [items]="countryList" bindLabel="name" class="custom" [multiple]="false"
+          [closeOnSelect]="true" [searchable]="true" loadingText="Loading..." placeHolder="Select your country"
+          [ngModelOptions]="{standalone: true}" (change)="getData()" [virtualScroll]="true"
+          [(ngModel)]="selectedCountry" [addTag]="false">
+        </ng-select>
+      </div>
+      <div class="row row-gap">
+        <div class="payment-method">
+          <div class="row justify-aligment">
+            <ng-container *ngFor="let item of paymendMethod">
+              <div class="payment-icon">
+                <img src="{{item.img_url}}" alt="{{item.name}}">
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <!-- </div> -->
+      <ng-template #B>
+        <div class="row">
+          <p><i>Not supported country</i></p>
+        </div>
+
+      </ng-template>
+
+      <div *ngIf="paymendMethod && paymendMethod.length > 0 else B" class="row">
+        <div class="card card-width">
+          <form #payment="ngForm" (ngSubmit)="payment(payment)">
+            <div class="card-header">
+              <p><b>Credit card</b></p>
+            </div>
+            <div class="card-body">
+              <p>Amount: <span class="badge badge-secondary"><b>{{price}}{{currencyUnit}}</b></span></p>
+              <div class="row row-gap">
+                <div class="col-md-4">
+                  <label for="card-holder">Card holder name:</label>
+                </div>
+                <div class="col-md-8">
+                  <input type="text" maxlength="250" pattern="[A-Za-z]" title="Only allow alphabet character"
+                    class="form-control" placeholder="card holder name">
+                </div>
+              </div>
+              <div class="row row-gap">
+                <div class="col-md-4">
+                  <label for="card-holder">Card number:</label>
+                </div>
+                <div class="col-md-8">
+                  <input type="number" [(ngModel)]="cardNumber" name="cardNum" [ngModel]="data.cardNumber"
+                    #cardNum="ngModel" maxlength="50" class="form-control">
+                  <!-- <input type="number"  (change)="checkCreditCard(cardNumber)" [(ngModel)]="cardNumber" name="cardNumber"  maxlength="50" class="form-control">                -->
+                </div>
+              </div>
+              <div class="row row-gap">
+                <div class="col-md-4">
+                  <label for="card-holder">Expiration date</label>
+                </div>
+                <div class="col-md-8">
+                  <div class="row" style="padding-left: inherit">
+                    <input class="form-control" style="width: 20%" type="text" pattern="\d*" maxlength="2" [min]="1" [max]="12"
+                      placeholder="mm">
+                    <span class="default-distance">/</span> <input class="form-control default-distance"
+                      style="width: 20%" placeholder="yy"  type="text" pattern="\d*" maxlength="2" [min]="19" />
+                  </div>
+                </div>
+              </div>
+              <div class="row row-gap">
+                <div class="col-md-4">
+                  <label for="card-holder">CVV2(CVV):</label>
+                </div>
+                <div class="col-md-8">
+                  <input  type="text" pattern="\d*" maxlength="3" class="form-control" style="width: 20%">
+                </div>
+              </div>
+            </div>
+            <div class="card-footer center-alignment">
+              <button type="submit" class="btn btn-warning">Pay <span
+                  class="badge badge-light"><b>{{price}}{{currencyUnit}}</b></span></button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
     <div class="col-md-3"></div>
