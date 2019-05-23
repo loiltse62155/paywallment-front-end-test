@@ -23,7 +23,7 @@ export class PaymentComponent implements OnInit {
   currentCountry: any;
   selectedMethod: string;
   paymentForm: FormGroup;
-  error = { errorDate: "", errorCardNumber: "", errorCVV:"" };
+  error = { errorDate: "", errorCardNumber: "", errorCVV: "", errorName: "" };
   constructor(
     private service: PaymentServiceService,
     private spinner: NgxSpinnerService,
@@ -52,9 +52,12 @@ export class PaymentComponent implements OnInit {
   }
   getCountryList() {
     this.service.getCountryCode().subscribe(
-      (data: any) => {
+      (data: []) => {
         this.countryList = data;
         this.getCurrentCountry();
+      },
+      error => {
+        console.log("Fail to load countries")
       }
     )
   }
@@ -75,6 +78,9 @@ export class PaymentComponent implements OnInit {
           return item['alpha2Code'] == this.countryCode;
         })[0];
         this.getData();
+      },
+      error => {
+        console.log("Get current country failed");
       }
     )
   }
@@ -96,12 +102,19 @@ export class PaymentComponent implements OnInit {
   }
   getData() {
     this.spinner.show();
+    this.paymentForm.reset();
+    this.resetNoti();
     if (this.selectedCountry)
       this.countryCode = this.selectedCountry['alpha2Code']
     this.service.getPaymentMethod(this.projectKey, this.privateKey, this.countryCode).subscribe(
-      (data: paymentMethodObject[]) => {
+      (data: any) => {
         this.spinner.hide();
-        this.paymendMethod = data;
+        if (data != false) {
+          this.paymendMethod = data;
+        }
+        else {
+          this.paymendMethod = [];
+        }
 
       },
       err => {
@@ -111,7 +124,7 @@ export class PaymentComponent implements OnInit {
     )
   }
   resetNoti() {
-    this.error = { errorDate: "", errorCardNumber: "", errorCVV:"" };
+    this.error = { errorDate: "", errorCardNumber: "", errorCVV: "", errorName: "" };
   }
   payment() {
     let temp = this.paymentForm.value;
@@ -119,16 +132,20 @@ export class PaymentComponent implements OnInit {
     let mm = (String(today.getMonth() + 1).padStart(2, '0') as any) * 1;
     let yy = (today.getFullYear().toString().substr(-2) as any) * 1;
     this.resetNoti();
-    if (temp.cardMonth * 1 < 1 || temp.cardMonth * 1 > 12 || (temp.cardMonth * 1 < mm && temp.cardYear*1 == yy) || temp.cardYear * 1 < yy) {
+    if (temp.cardMonth * 1 < 1 || temp.cardMonth * 1 > 12 || (temp.cardMonth * 1 < mm && temp.cardYear * 1 == yy) || temp.cardYear * 1 < yy) {
       this.error.errorDate = "Please enter a valid date";
       return;
     }
-    if (temp.cardNumber.length < 16 && this.checkValidCardNumber(temp.cardNumber) == false) {
+    if (temp.cardNumber.length < 16 || this.checkValidCardNumber(temp.cardNumber) == false) {
       this.error.errorCardNumber = "Please enter a 16-digit valid number";
       return;
     }
-    if (temp.cardCVV.length < 3 ) {
+    if (temp.cardCVV.length < 3) {
       this.error.errorCVV = "Please enter a valid CVV";
+      return;
+    }
+    if (temp.cardName.trim().length < 0) {
+      this.error.errorName = "Please enter a valid name";
       return;
     }
     this.router.navigate(["/success"]);
