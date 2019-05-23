@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { PaymentComponent } from './payment/payment.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SuccessComponent } from './result-screen/success/success.component';
 import { ErrorComponent } from './result-screen/error/error.component';
 
@@ -23,7 +23,8 @@ import { ErrorComponent } from './result-screen/error/error.component';
     HttpClientModule,
     NgxSpinnerModule,
     NgSelectModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
